@@ -14,7 +14,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/turbobytes/cdnfinder/resource"
+	"github.com/chennqqi/cdnfinder/resource"
 )
 
 var (
