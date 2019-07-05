@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/chennqqi/cdnfinder"
 	"github.com/nytimes/gziphandler"
-	"github.com/turbobytes/cdnfinder"
 )
 
 var server = flag.String("server", "8.8.8.8:53", "dns server for resolution")

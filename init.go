@@ -6,7 +6,6 @@ import (
 	"archive/zip"
 	"compress/bzip2"
 	"encoding/json"
-	"flag"
 	"io"
 	"io/ioutil"
 	"log"
@@ -22,7 +21,6 @@ var (
 	cdnmatches       [][]string
 	resourcefinderjs = os.TempDir() + "/cdnfinder-resourcefinder.js"
 	phantomjsbin     = ""
-	phantomdef       = flag.String("phantomjsbin", "", "path to phantomjs, if blank tmp dir is used")
 	initialized      = false
 )
 
@@ -75,7 +73,6 @@ func installphantomjs(url, dst, fname string) {
 	if strings.HasSuffix(url, ".zip") {
 		extractzip(resp.Body, fname, dst)
 	}
-
 }
 
 func extractzip(r io.Reader, fname, dst string) {
@@ -148,6 +145,13 @@ func extracttar(r io.Reader, fname, dst string) {
 
 //Install phantomjs
 func loadphantomjs() {
+	if phantomjsbin != "" {
+		_, err := os.Stat(phantomjsbin)
+		if err == nil {
+			return
+		}
+	}
+
 	fname := ""
 	url := ""
 	switch runtime.GOOS {
@@ -170,9 +174,7 @@ func loadphantomjs() {
 	default:
 		notsupported()
 	}
-	if *phantomdef != "" {
-		phantomjsbin = *phantomdef
-	} else {
+	if phantomjsbin == "" {
 		phantomjsbin = os.TempDir() + "/cdnfinder_2.1.1_" + fname
 	}
 	if _, err := os.Stat(phantomjsbin); os.IsNotExist(err) {
@@ -184,10 +186,17 @@ func loadphantomjs() {
 
 // Init must be called once after the main package runs flag.Parse().
 // The reason for doing this manually is to allow main package to set up its flags.
-func Init() {
+func Init(_phantomjsbin, _resourcefinderjs string) {
 	if initialized {
 		return
 	}
+	if _phantomjsbin != "" {
+		phantomjsbin = _phantomjsbin
+	}
+	if _resourcefinderjs != "" {
+		resourcefinderjs = _resourcefinderjs
+	}
+
 	initialized = true
 	populatecnamechain()
 	ensureresourcefinder()

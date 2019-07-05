@@ -7,20 +7,20 @@ import (
 	"log"
 	"time"
 
-	"github.com/turbobytes/cdnfinder"
+	"github.com/chennqqi/cdnfinder"
 )
 
-var server = flag.String("server", "8.8.8.8:53", "dns server for resolution")
-var full = flag.String("full", "", "URL for full finder")
-var hostname = flag.String("host", "", "hostname for single hostname finder")
-var verbose = flag.Bool("verbose", false, "Post verbose logs to stderr")
-
-func init() {
-	flag.Parse()
-	cdnfinder.Init()
-}
-
 func main() {
+	var phantomjsbin string
+	var server = flag.String("server", "8.8.8.8:53", "dns server for resolution")
+	var full = flag.String("full", "", "URL for full finder")
+	var hostname = flag.String("host", "", "hostname for single hostname finder")
+	var verbose = flag.Bool("verbose", false, "Post verbose logs to stderr")
+	flag.StringVar(&phantomjsbin, "phantomjsbin", "", "path to phantomjs, if blank tmp dir is used")
+
+	flag.Parse()
+	cdnfinder.Init(phantomjsbin, "")
+
 	if *full != "" {
 		out, err := cdnfinder.FullFinder(*full, *server, time.Minute, *verbose)
 		if err != nil {
@@ -40,6 +40,5 @@ func main() {
 	} else {
 		log.Fatal("full or host needs to be specified")
 	}
-
 	//
 }
