@@ -76,7 +76,6 @@ func installphantomjs(url, dst, fname string) {
 }
 
 func extractzip(r io.Reader, fname, dst string) {
-
 	tmpfile, err := ioutil.TempFile("", "phantomzip")
 	if err != nil {
 		log.Fatal(err)
