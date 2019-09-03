@@ -43,6 +43,7 @@
   ["youtube.", "Google"],
   [".googleusercontent.com", "Google"],
   [".l.doubleclick.net", "Google"],
+  ["d.gcdn.co", "G-core"],
   [".hiberniacdn.com", "Hibernia"],
   [".hwcdn.net", "Highwinds"],
   [".incapdns.net", "Incapsula"],
@@ -72,5 +73,7 @@
   [".vo.msecnd.net", "Windows Azure"],
   [".ay1.b.yahoo.com", "Yahoo"],
   [".yimg.", "Yahoo"],
-  [".zenedge.net", "Zenedge"]
+  [".zenedge.net", "Zenedge"],
+  [".b-cdn.net", "BunnyCDN"],
+  [".ksyuncdn.com", "Kingsoft"]
 ]
